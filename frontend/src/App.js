@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { Store } from "./Store";
 import CartScreen from "./screens/CartScreens";
 import SignInScreen from "./screens/SignInScreen";
+import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 
 function App() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -16,6 +17,7 @@ function App() {
   const signOutHandler = () => {
     ctxDispatch({ type: "USER_SIGNOUT" });
     localStorage.removeItem("userInfo");
+    localStorage.removeItem("shippingAddress");
   };
   return (
     <BrowserRouter>
@@ -44,15 +46,14 @@ function App() {
                     <LinkContainer to="/orderhistory">
                       <NavDropdown.Item>Order History</NavDropdown.Item>
                     </LinkContainer>
-                    <NavDropdown.Divider>
-                      <Link
-                        className="dropdown-item"
-                        to="#signout"
-                        onClick={signOutHandler}
-                      >
-                        Sign Out
-                      </Link>
-                    </NavDropdown.Divider>
+                    <NavDropdown.Divider />
+                    <Link
+                      className="dropdown-item"
+                      to="#signout"
+                      onClick={signOutHandler}
+                    >
+                      Sign Out
+                    </Link>
                   </NavDropdown>
                 ) : (
                   <Link className="nav-link" to="/signin">
@@ -69,7 +70,10 @@ function App() {
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/signin" element={<SignInScreen />} />
-
+              <Route
+                path="/shipping"
+                element={<ShippingAddressScreen />}
+              ></Route>
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>
